@@ -2,18 +2,18 @@
 ;;LAST UPDATED 24-04-2024
 
 ;|
-Àü¿ªº¯¼ö
+ì „ì—­ë³€ìˆ˜
 SYMSC
 
 WIRECOUNT_Z
-WIRECOUNT_MZ : ¼öµ¿ÃàÀû
+WIRECOUNT_MZ : ìˆ˜ë™ì¶•ì 
 
-SE1 : Á¢Áö¼± ±×¸±Áö ¿©ºÎ
-SE2 : º¯°æµÈ ¹æ½ÄÀ¸·Î ±×¸±Áö ¿©ºÎ
+SE1 : ì ‘ì§€ì„  ê·¸ë¦´ì§€ ì—¬ë¶€
+SE2 : ë³€ê²½ëœ ë°©ì‹ìœ¼ë¡œ ê·¸ë¦´ì§€ ì—¬ë¶€
 
-Dx : ´ë°¢¼±ÀÇ °¡·Îº¯À§
-DY : ´ë°¢¼±ÀÇ ¼¼·Îº¯À§
-DS : ´ë°¢¼±°£ÀÇ °Å¸®
+Dx : ëŒ€ê°ì„ ì˜ ê°€ë¡œë³€ìœ„
+DY : ëŒ€ê°ì„ ì˜ ì„¸ë¡œë³€ìœ„
+DS : ëŒ€ê°ì„ ê°„ì˜ ê±°ë¦¬
 
 
 |;
@@ -43,7 +43,7 @@ DS : ´ë°¢¼±°£ÀÇ °Å¸®
     )
 
   )
-  ;;ÃÖÃÊ ¸í·É ½ÇÇà½Ã ±âº»°ª ÁöÁ¤
+  ;;ìµœì´ˆ ëª…ë ¹ ì‹¤í–‰ì‹œ ê¸°ë³¸ê°’ ì§€ì •
 
   (IF (NULL SE1)
     (PROGN
