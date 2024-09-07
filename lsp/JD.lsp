@@ -1,5 +1,5 @@
-;;PROGRAMED BY RIMIN YU (CODENAME U)
-;;LAST UPDATED 12-04-2023
+;;PROGRAMED BY RIMIN YU
+;;LAST UPDATED 09-07-2024
 
 ;;JD : 정확한 간격 맞춰서 조명 배치
 ;;JD2 : 300에 맞춰서 조명 배치
@@ -12,8 +12,9 @@
    (setq P2 (GETCORNER P1 "INPUT POINT2 : " ))
    (setq DX (abs (- (car P1) (car P2))))
    (setq DY (abs (- (cadr P1) (cadr P2))))
-   (princ "\nINPUT HOR COUNT (DX:")(princ DX)(setq NX (GETINT ") : "))
-   (princ "\nINPUT VER COUNT (DY:")(princ DY)(setq NY (GETINT ") : "))
+   
+  (setq NX (GETINT (strcat "\nINPUT HOR COUNT (DX:" (rtos DX) ") : ")))
+  (setq NY (GETINT (strcat "\nINPUT VER COUNT (DY:" (rtos DY) ") : ")))
 
    (IF (= nil NX)
       (PROGN
