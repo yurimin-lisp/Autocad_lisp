@@ -15,7 +15,10 @@ If the English and Korean content differ, the Korean content takes precedence.
 
 #BFT.lsp
 
+![BFT](https://github.com/user-attachments/assets/f8c85bd5-df06-4602-8426-ae80101015ba)
+
 BFT
+
 
 Converts text to fixed width text centered on a box.
 
@@ -27,6 +30,8 @@ Converts text to fixed width text centered on a box.
 --------------------------------------------------
 
 #JD.lsp
+
+![JD](https://github.com/user-attachments/assets/b95fbaee-02f8-48f2-8a70-0c27ceef51c7)
 
 JD
 
@@ -51,6 +56,8 @@ JD 명령에서 간격을 300의 배수로 조정합니다.
 
 #WC.lsp
 
+![WC](https://github.com/user-attachments/assets/00b7afae-1a7f-420e-8606-7d7f13a2ad01)
+
 WC
 
 Draw the number of wire strands.
@@ -68,6 +75,8 @@ R : 이미 도면에 표현되어있는 가닥수 심볼 크기를 측정하여 
 --------------------------------------------------
 
 #XCB.lsp
+
+![XCB](https://github.com/user-attachments/assets/d78c12e3-29bb-4adb-ab8d-7d656719934d)
 
 XCB
 
