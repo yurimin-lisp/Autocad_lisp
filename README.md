@@ -66,7 +66,7 @@ Draw the number of wire strands.
 
 G : 접지선을 그릴지 유무
 
-S : 접지선 표시방법을 다는방법으로 할지
+S : 접지선 표시방법을 다는방법으로 표현
 
 R : 이미 도면에 표현되어있는 가닥수 심볼 크기를 측정하여 기존 심볼과 같은 사이즈로 그리도록 설정
 
@@ -90,3 +90,7 @@ XXCB
 Select not xcliped Block,XREF
 
 XClip이 되지않은 블럭,외부참조 선택
+
+
+ZWCAD에서 작동하지 않습니다.
+Not working on ZWCAD
