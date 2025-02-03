@@ -1,9 +1,9 @@
 ;;PROGRAMED BY RIMIN YU
-;;LAST UPDATED 24-04-2024
+;;LAST UPDATED 01-02-2025
 
 ;|
 전역변수
-SYMSC
+YU_SYMSC
 
 WIRECOUNT_Z
 WIRECOUNT_MZ : 수동축적
@@ -18,32 +18,56 @@ DS : 대각선간의 거리
 
 |;
 
-(DEFUN C:WC (/ MODE X BOOL OSN I CI PO C1 P0 P1 P2 RP1 RP2 RP3 RP4)
+(defun c:WC () (WireCounter))
 
-  (IF (NULL WIRECOUNT_Z)
-    (PROGN
-      (IF (NULL SYMSC)
-        (PROGN
-           (SETQ WIRECOUNT_Z 150)
-           (SETQ WIRECOUNT_MZ 0)
-        )
-        (PROGN
-          (SETQ WIRECOUNT_Z SYMSC)
-          (SETQ WIRECOUNT_MZ 0)
+
+(defun YU_CHECK_SCLIB () 
+  (if (or (null YU_SYMSC) (null YU_TXTH) (null YU_SCLIB)) 
+    (progn 
+      (setq YU_SYMSC 100)
+      (setq YU_TXTH 250)
+      (princ "\n 스케일 라이브러리가 없습니다! SCALELIB.lsp를 로드해주세요")
+    )
+  )
+)
+
+
+
+(DEFUN WireCounter (/ OSN CMDE MODE X BOOL I CI PO C1 P0 P1 P2 RP1 RP2 RP3 RP4)
+  
+  (defun *error* (msg) 
+    (if (= nil OSN)
+      (progn)
+      (setvar "OSMODE" OSN)
+    )
+    (if (= nil CMDE)
+      (progn)
+      (setvar "CMDECHO" CMDE)
+    )
+    (command "UNDO" "E")
+  )
+  
+
+  (IF (NULL WIRECOUNT_Z) 
+    (PROGN 
+      (YU_CHECK_SCLIB)
+      
+      (setq WIRECOUNT_Z YU_SYMSC)
+      (setq WIRECOUNT_MZ 0)
+      
+    )
+
+    (PROGN 
+      (IF (AND (/= WIRECOUNT_Z YU_SYMSC) (= WIRECOUNT_MZ nil)) 
+        (PROGN 
+          (SETQ WIRECOUNT_Z YU_SYMSC)
         )
       )
     )
-
-    (PROGN
-      (IF (AND (/= WIRECOUNT_Z SYNSC) (= WIRECOUNT_MZ 0))
-        (PROGN
-           (SETQ WIRECOUNT_Z SYMSC)
-        )
-      )
-    )
-
   )
   ;;최초 명령 실행시 기본값 지정
+  
+ 
 
   (IF (NULL SE1)
     (PROGN
@@ -74,6 +98,8 @@ DS : 대각선간의 거리
       (SETQ WIRECOUNT_DS 100)
     )
   )
+  
+   
 
   (SETQ BOOL 0)
 
@@ -96,7 +122,7 @@ DS : 대각선간의 거리
 
           (IF (NULL WIRECOUNT_Z)
             (PROGN
-              (SETQ WIRECOUNT_Z SYMSC)
+              (SETQ WIRECOUNT_Z YU_SYMSC)
               (SETQ WIRECOUNT_MZ 0)
             )
             (SETQ WIRECOUNT_MZ 1)
@@ -148,9 +174,11 @@ DS : 대각선간의 거리
 
   (SETQ X (/ WIRECOUNT_Z 150.0))
 
-  (command "undo" "be")
-  (SETQ OSN (GETVAR "OSMODE"))
-  (SETVAR "OSMODE" 0)
+  (setq OSN (getvar "OSMODE"))
+  (setq CMDE (getvar "CMDECHO"))
+  (command "UNDO" "BE")
+  (setvar "OSMODE" 0)
+  (setvar "CMDECHO" 0)
 
 
   (IF (= MODE "V")
@@ -312,8 +340,9 @@ DS : 대각선간의 거리
     
   )
 
-  (SETVAR "OSMODE" OSN)
-  (command "undo" "e")
+  (setvar "OSMODE" OSN)
+  (setvar "CMDECHO" CMDE)
+  (command "UNDO" "E")
 
 )
 

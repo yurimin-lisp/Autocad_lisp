@@ -1,84 +1,99 @@
-;;2023-11-23 유리민 작성
+;;PROGRAMED BY RIMIN YU
+;;LAST UPDATED 01-02-2025
 ;;참고자료
 ;;https://forums.autodesk.com/t5/visual-lisp-autolisp-and-general/xclip-boundary-detection/td-p/1732753
 ;;https://www.cadtutor.net/forum/topic/48854-list-to-selection-set/
 
-(defun c:xcb ( / input obj_num i ett_name output outss)
-	(setq input (ssget)) ;;inputobj selection set
+(defun c:xcb () (XClippedBlocksfind) )
+(defun c:xxcb () (NotXClippedBlocksfind) )
 
-	(setq obj_num (sslength input)) ;;obj number
 
-	(setq output (list))
-	
-	(princ "Selected obj_num :" )(princ obj_num)(princ ",") (princ)
+(defun XClippedBlocksfind (/ input obj_num i ett_name output outss) 
+  (setq input (ssget '((0 . "insert")))) ;;inputobj selection set
 
- 	(setq i (- obj_num 1))
-    (while (> i -1)
-		(setq ett_name (ssname input i)) ;; get entity name
+  (setq obj_num (sslength input)) ;;obj number
 
-		(if (= "INSERT" (cdr (assoc 0 (entget ett_name))))
-			(progn
-				(setq test (blk:IsClipped (vlax-ename->vla-object ett_name)))
-				(if (= nil test)
-					(princ)
-					(progn
-						(setq output (cons ett_name output))
-					)
-				)
-			)
-			(princ)
-		)
-      (setq i (- i 1))
-   )
+  (setq output (list))
 
-   (setq outss (ssadd))
-   (foreach entityToAdd output (ssadd entityToAdd outss))
+  (princ "\nSelected obj_num :")
+  (princ obj_num)
+  (princ ",")
+  (princ)
 
-	(princ "XCLIP BLOCK/XREF Selected : ") (princ (sslength outss))(princ "")
+  (setq i (- obj_num 1))
+  (while (> i -1) 
+    (setq ett_name (ssname input i)) ;; get entity name
 
-	(command "select" outss "")
+    (if (= "INSERT" (cdr (assoc 0 (entget ett_name)))) 
+      (progn 
+        (setq test (blk:IsClipped (vlax-ename->vla-object ett_name)))
+        (if (= nil test) 
+          (princ)
+          (progn 
+            (setq output (cons ett_name output))
+          )
+        )
+      )
+      (princ)
+    )
+    (setq i (- i 1))
+  )
+
+  (setq outss (ssadd))
+  (foreach entityToAdd output (ssadd entityToAdd outss))
+
+  (princ "\nXCLIP BLOCK/XREF Selected : ")
+  (princ (sslength outss))
+  (princ "")
+
+  (command "select" outss "")
 )
 
 
-(defun c:xxcb ( / input obj_num i ett_name output outss)
-	(setq input (ssget)) ;;inputobj selection set
+(defun NotXClippedBlocksfind (/ input obj_num i ett_name output outss) 
+  (setq input (ssget '((0 . "insert")))) ;;inputobj selection set
 
-	(setq obj_num (sslength input)) ;;obj number
+  (setq obj_num (sslength input)) ;;obj number
 
-	(setq output (list))
-	
-	(princ "Selected obj_num :" )(princ obj_num)(princ ",") (princ)
+  (setq output (list))
 
- 	(setq i (- obj_num 1))
-    (while (> i -1)
-		(setq ett_name (ssname input i)) ;; get entity name
+  (princ "\nSelected obj_num :")
+  (princ obj_num)
+  (princ ",")
+  (princ)
 
-		(if (= "INSERT" (cdr (assoc 0 (entget ett_name))))
-			(progn
-				(setq test (blk:IsClipped (vlax-ename->vla-object ett_name)))
-				(if (= nil test)
-					(progn
-						(setq output (cons ett_name output))
-					)
-					(princ)
-				)
-			)
-			(princ)
-		)
-      (setq i (- i 1))
-   )
+  (setq i (- obj_num 1))
+  (while (> i -1) 
+    (setq ett_name (ssname input i)) ;; get entity name
 
-   (setq outss (ssadd))
-   (foreach entityToAdd output (ssadd entityToAdd outss))
+    (if (= "INSERT" (cdr (assoc 0 (entget ett_name)))) 
+      (progn 
+        (setq test (blk:IsClipped (vlax-ename->vla-object ett_name)))
+        (if (= nil test) 
+          (progn 
+            (setq output (cons ett_name output))
+          )
+          (princ)
+        )
+      )
+      (princ)
+    )
+    (setq i (- i 1))
+  )
 
-	(princ "Non XCLIP BLOCK/XREF Selected : ") (princ (sslength outss))(princ "")
+  (setq outss (ssadd))
+  (foreach entityToAdd output (ssadd entityToAdd outss))
 
-	(command "select" outss "")
+  (princ "\nNon XCLIP BLOCK/XREF Selected : ")
+  (princ (sslength outss))
+  (princ "")
+
+  (command "select" outss "")
 )
 
 
 
-(defun blk:IsClipped (b / r xd f s)
+(defun blk:IsClipped (b / r xd f s) 
 ;|Description:
 Return T if a block or Xref is XClipped.
 Parameters:
@@ -87,22 +102,72 @@ Return Value:
 t - Objects is XClipped
 nil - Object is not XClipped
 |;
-(setq r
-(vl-catch-all-apply
-'(lambda ()
-(cond ( ( and (= :vlax-true (vla-get-HasExtensionDictionary b))
-(setq xd (vla-GetExtensionDictionary b))
-(setq f (vla-GetObject xd "ACAD_FILTER"))
-(setq s (vla-GetObject f "SPATIAL"))
-)
-)
-)
-)
-)
-)
-(if (vl-catch-all-error-p r)
-nil
-r
-)
+
+
+  (if (= (getvar "program") "ZWCAD") 
+    (progn 
+      (setq r (vl-catch-all-apply 
+                '(lambda () 
+                   (cond 
+                     ((and (= :vlax-true (vla-get-HasExtensionDictionary b)) 
+                           (setq xd (vla-GetExtensionDictionary b))
+                           (setq f (vla-GetObject xd "ACAD_FILTER"))
+                           ;;(setq s (vla-GetObject f "SPATIAL"))
+                      )
+                     )
+                   )
+                 )
+              )
+      )
+    )
+    (progn 
+      (setq r (vl-catch-all-apply 
+                '(lambda () 
+                   (cond 
+                     ((and (= :vlax-true (vla-get-HasExtensionDictionary b)) 
+                           (setq xd (vla-GetExtensionDictionary b))
+                           (setq f (vla-GetObject xd "ACAD_FILTER"))
+                           (setq s (vla-GetObject f "SPATIAL"))
+                      )
+                     )
+                   )
+                 )
+              )
+      )
+    )
+  )
+
+
+
+  (if (vl-catch-all-error-p r) 
+    nil
+    r
+  )
 )
 
+
+;|
+(defun xclippedblocks (/ lst ss i ent ed xc)
+  (if (setq ss (ssget "X" '((0 . "INSERT"))))
+    (progn
+      (setq i 0)
+      (while (setq ent (ssname ss i))
+       (setq ed (entget ent))
+       (cond
+         ((setq xc (member '(102 . "{ACAD_XDICTIONARY") ed))
+          (setq xc (cdr (cadr xc)))
+          (cond
+            ((dictsearch xc "ACAD_FILTER")
+             (setq lst (cons (cdr (assoc 2 ed)) lst))
+            )
+          )
+         )
+       )
+       (setq i (1+ i))
+      )
+    )
+  )
+  lst
+)
+
+|;
