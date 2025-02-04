@@ -92,5 +92,7 @@ Select not xcliped Block,XREF
 XClip이 되지않은 블럭,외부참조 선택
 
 
-ZWCAD에서 작동하지 않습니다.
-Not working on ZWCAD
+ZWCAD, GStarCAD에서 작동하지 않습니다.
+AutoCAD, BricsCAD에서 작동합니다.
+Not working on ZWCAD, GStarCAD.
+Working on AutoCAD, BricsCAD.
